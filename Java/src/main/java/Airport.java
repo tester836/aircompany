@@ -9,16 +9,16 @@ import java.util.*;
 public class Airport {
     private final List<? extends Plane> planes;
 
-    public List<PassengerPlane> getPassengerPlane() {
-        List<? extends Plane> l;
-        l = this.planes;
-        List<PassengerPlane> x = new ArrayList<>();
-        for (Plane p : l) {
-            if (p instanceof PassengerPlane) {
-                x.add((PassengerPlane) p);
+    public List<PassengerPlane> getPassengerPlanes() {
+        List<? extends Plane> list;
+        list = this.planes;
+        List<PassengerPlane> passengerPlanes = new ArrayList<>();
+        for (Plane plane : list) {
+            if (plane instanceof PassengerPlane) {
+                passengerPlanes.add((PassengerPlane) plane);
             }
         }
-        return x;
+        return passengerPlanes;
     }
 
     public List<MilitaryPlane> getMilitaryPlanes() {
@@ -32,7 +32,7 @@ public class Airport {
     }
 
     public PassengerPlane getPassengerPlaneWithMaxPassengersCapacity() {
-        List<PassengerPlane> passengerPlanes = getPassengerPlane();
+        List<PassengerPlane> passengerPlanes = getPassengerPlanes();
         PassengerPlane planeWithMaxCapacity = passengerPlanes.get(0);
         for (PassengerPlane passengerPlane : passengerPlanes) {
             if (passengerPlane.getPassengersCapacity() > planeWithMaxCapacity.getPassengersCapacity()) {
@@ -95,7 +95,7 @@ public class Airport {
     }
 
     public Airport sortByMaxLoadCapacity() {
-        Collections.sort(planes, new Comparator<Plane>() {
+        planes.sort(new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
                 return o1.getMaxLoadCapacity() - o2.getMaxLoadCapacity();
             }
@@ -107,15 +107,9 @@ public class Airport {
         return planes;
     }
 
-    private void print(Collection<? extends Plane> collection) {
-        for (Plane plane : collection) {
-            System.out.println(plane);
-        }
-    }
-
     @Override
     public String toString() {
-        return "Airport{" + "Planes=" + planes.toString() + "}";
+        return "Airport {Planes= " + planes.toString() + "}";
     }
 
     public Airport(List<? extends Plane> planes) {
